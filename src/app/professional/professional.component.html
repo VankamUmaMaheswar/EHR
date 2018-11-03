@@ -1,0 +1,124 @@
+<div style= text-align:center >
+  {{professionalForm.value.Id}}
+
+  <img id="photo"  src="../../assets/profile.jpeg">
+</div>
+<div *ngIf="!formValid">
+<form [formGroup]="professionalForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label class="fields">User Id
+    <input type="text" formControlName="Id" placeholder="login user id" title="Id with which the other users identifies you" readonly>
+  </label><br><br>
+  </div>
+ <div>
+  <label class="fields" >First Name
+    <input type="text" formControlName="firstName">
+  </label>
+  <label class="fields1" >Middle Name
+    <input type="text" formControlName="middleName" >
+  </label>
+  <label class="fields2" >Last Name
+    <input type="text" formControlName="lastName">
+  </label>
+</div><br>
+<div>
+  <label class="fields">Profession
+    <input type="string" formControlName="profession">
+  </label>
+  <label class="fields1" >Experience
+    <input type="string" formControlName="experience">
+  </label>
+  <label class="fields2">Registration number
+    <input type="string" formControlName="registration">
+  </label>
+</div><br>
+  <label>Qualification
+    <input type="string" formControlName="qualification">
+  </label><br>
+  <div>
+    <div>
+      <label>Speciailization
+        <input type="string" formControlName="specialization">
+      </label>
+    </div>
+    <div>
+      <label>Hospital
+        <input type="text" formControlName="hospital">
+      </label>
+    </div>
+    <h3>Address</h3>
+    <div>
+    <label class="fields">House Number
+      <input type="text" formControlName="houseNumber">
+    </label>
+    <label class="fields1">House Name
+      <input type="text" formControlName="houseName">
+    </label>
+    <label class="fields2">Steet
+      <input type="text" formControlName="street">
+    </label>
+  </div><br>
+  <div>
+    <label class="fields">City/Town/Village
+      <input type="text" formControlName="city">
+    </label>
+    <label class="fields1">District
+      <input type="text" formControlName="district">
+    </label>
+  </div><br>
+  <div>
+    <label class="fields">State/Province
+      <input type="text" formControlName="state">
+    </label>
+    <label class="fields1">Country
+      <input type="text" formControlName="country">
+    </label>
+    <label class="fields2">ZIP Code
+      <input type="text" formControlName="zipCode">
+    </label>
+  </div><br>
+  </div>
+  <div>
+  <label class="fields">Landline number
+    <input type="text" formControlName="phoneNumber">
+  </label>
+  <label class="fields1">Mobile number
+    <input type="text" formControlName="mobileNumber">
+  </label>
+</div><br>
+<div>
+  <label class="fields">Email
+    <input type="text" formControlName="email">
+  </label>
+</div><br>
+
+<button [disabled]="!professionalForm.valid" type="submit">Submit</button>
+
+</form>
+</div>
+
+<div [hidden]="!formValid">
+  <div>Name: {{professionalForm.value.firstName}} {{professionalForm.value.middleName}} {{professionalForm.value.lastName}} </div>
+  <div>Profession: {{professionalForm.value.profession}} </div>
+  <div>Experience: {{professionalForm.value.experience}} </div>
+  <div>Registration Number: {{professionalForm.value.registration}}  </div>
+  <div>Qualification: {{professionalForm.value.qualification}} </div>
+  <div>Speciailization: {{professionalForm.value.specialization}} </div>
+  <div>Hospital {{professionalForm.value.hospital}} </div>
+  <div>Address:</div>
+  <div>{{professionalForm.value.houseNumber}} {{professionalForm.value.houseName}} </div>
+  <div>{{professionalForm.value.street}} </div>
+  <div> {{professionalForm.value.city}}  </div>
+  <div> {{professionalForm.value.district}} </div>
+  <div> {{professionalForm.value.state}} </div>
+  <div> {{professionalForm.value.country}} </div>
+  <div> {{professionalForm.value.zipcode}} </div>
+  <div>Telephone numbers:</div>
+  <div> {{professionalForm.value.phoneNumber}}  MobileNumber: {{professionalForm.value.mobileNumber}} </div>
+  <div>Email: {{professionalForm.value.email}} </div>
+
+  <button type="button" (click)="formValid=false; update=true">Update</button>
+</div>
+
+<button routerLink="/records">Records</button>
+<router-outlet></router-outlet>

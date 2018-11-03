@@ -1,0 +1,20 @@
+.credentials {
+  text-align: center;
+  margin: 35% 35%;
+}
+.user {
+  text-align: center;
+  color: black;
+  margin: 30px;
+}
+.pass {
+  text-align: center;
+  color: black;
+}
+.press {
+  background-color: cyan;
+  margin-left: 48%;
+}
+.pic {
+  margin-left: 40%;
+}

@@ -1,0 +1,133 @@
+<div style= text-align:center >
+  {{profileForm.value.Id}}
+
+  <img id="photo"  src="../../assets/profile.jpeg">
+</div>
+<div *ngIf="!formValid">
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label class="fields">User Id
+    <input type="text" formControlName="Id" placeholder="login user id" title="Id with which the other users identifies you" readonly>
+  </label><br><br>
+  </div>
+ <div>
+  <label class="fields" >First Name
+    <input type="text" formControlName="firstName">
+  </label>
+  <label class="fields1" >Middle Name
+    <input type="text" formControlName="middleName" >
+  </label>
+  <label class="fields2" >Last Name
+    <input type="text" formControlName="lastName">
+  </label>
+</div><br>
+<div>
+  <label class="fields">Age
+    <input type="number" formControlName="age">
+  </label>
+  <label class="fields1" >Marital Status
+    <select formControlName="maritalStatus">
+      <option value="Married">Married</option>
+      <option value="Single">Single</option>
+    </select>
+  </label>
+  <label class="fields2">Gender
+    <select formControlName="gender">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+  </label>
+</div><br>
+  <label>Blood Group
+    <select formControlName="bloodGroup">
+      <option value="Apositive">A+</option>
+      <option value="Anegative">A-</option>
+      <option value="Bpositive">B+</option>
+      <option value="Bnegative">B-</option>
+      <option value="Opositive">O+</option>
+      <option value="Onegative">O-</option>
+      <option value="ABpostive">AB+</option>
+      <option value="ABnegative">AB-</option>
+    </select>
+  </label><br>
+  <div>
+    <h3>Address</h3>
+    <div>
+    <label class="fields">House Number
+      <input type="text" formControlName="houseNumber">
+    </label>
+    <label class="fields1">House Name
+      <input type="text" formControlName="houseName">
+    </label>
+    <label class="fields2">Steet
+      <input type="text" formControlName="street">
+    </label>
+  </div><br>
+  <div>
+    <label class="fields">City/Town/Village
+      <input type="text" formControlName="city">
+    </label>
+    <label class="fields1">District
+      <input type="text" formControlName="district">
+    </label>
+  </div><br>
+  <div>
+    <label class="fields">State/Province
+      <input type="text" formControlName="state">
+    </label>
+    <label class="fields1">Country
+      <input type="text" formControlName="country">
+    </label>
+    <label class="fields2">ZIP Code
+      <input type="text" formControlName="zipCode">
+    </label>
+  </div><br>
+  </div>
+  <div>
+  <label class="fields">Landline number
+    <input type="text" formControlName="phoneNumber">
+  </label>
+  <label class="fields1">Mobile number
+    <input type="text" formControlName="mobileNumber">
+  </label>
+</div><br>
+<div>
+  <label class="fields">Email
+    <input type="text" formControlName="email">
+  </label>
+</div><br>
+<div>
+  <label class="fields">Authorize
+    <input type="text" formControlName="authorized" placeholder="user id" title="Authorizing the person to view my record">
+  </label>
+</div>
+
+  <button [disabled]="!profileForm.valid" type="submit">Submit</button>
+
+</form>
+</div>
+
+<div [hidden]="!formValid">
+  <div>Name: {{profileForm.value.firstName}} {{profileForm.value.middleName}} {{profileForm.value.lastName}} </div>
+  <div>Age: {{profileForm.value.age}} </div>
+  <div>Marital Status: {{profileForm.value.maritalStatus}} </div>
+  <div>Gender: {{profileForm.value.gender}}  </div>
+  <div>Blood Group: {{profileForm.value.bloodGroup}} </div>
+  <div>Address:</div>
+  <div>{{profileForm.value.houseNumber}} {{profileForm.value.houseName}} </div>
+  <div>{{profileForm.value.street}} </div>
+  <div> {{profileForm.value.city}}  </div>
+  <div> {{profileForm.value.district}} </div>
+  <div> {{profileForm.value.state}} </div>
+  <div> {{profileForm.value.country}} </div>
+  <div> {{profileForm.value.zipcode}} </div>
+  <div>Telephone numbers:</div>
+  <div> {{profileForm.value.phoneNumber}}  MobileNumber: {{profileForm.value.mobileNumber}} </div>
+  <div>Email: {{profileForm.value.email}} </div>
+
+  <button type="button" (click)="formValid=false; update=true">Update</button>
+</div>
+
+<button routerLink="/records">Records</button>
+<router-outlet></router-outlet>

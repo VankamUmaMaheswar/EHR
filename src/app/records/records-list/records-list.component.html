@@ -1,0 +1,261 @@
+<div>
+  <p>Record list component</p>
+  <button type="button"  (click)="add()" class="addrecord">Add</button>
+</div>
+
+<div *ngIf="showRecordTemplate">
+  <form [formGroup]="recordForm" (ngSubmit)="addRecord()">
+  <div>
+    <label>Description
+      <input type="text" formControlName="description">
+    </label><br><br>
+    <label>Doctor
+      <input type="text" formControlName="doctor">
+    </label><br><br>
+    <label>Hospital
+      <input type="text" formControlName="hospital">
+    </label><br><br>
+    <label>Owner Id
+      <input type="text" formControlName="owner">
+    </label><br><br>
+    <label>Summary
+      <textarea [hidden]="pdfSummary" formControlName="summary" rows="10" cols="50"> </textarea>
+      <input type="file"  (change)="onchangeSummary($event)">
+      <div [hidden]="!pdfSummary">
+        <div>
+          <button type="button" (click)="incrementSummaryPage(-1)">-</button><span> Page </span>
+          <button type="button" (click)="incrementSummaryPage(1)">+</button>
+          <button type="button" (click)="incrementSummaryZoom(-0.1)">-</button><span> Zoom </span>
+          <button type="button" (click)="incrementSummaryZoom(0.1)">+</button>
+          <button type="button" (click)="rotateSummary(-90)"> Rotate Left </button><span> Rotate </span>
+          <button type="button" (click)="rotateSummary(90)"> Rotate Right </button>
+        </div>
+          <div class="thumbnail" style="width: 200px;height: 100px;">
+              <pdf-viewer [src]="pdfSrc"
+                          [(page)]="summaryPage"
+                          [original-size]="false"
+                          [show-all]="false"
+                          [render-text]="true"
+                          [rotation]="summaryRotation"
+                          [zoom] = "summaryZoom"
+                          [fit-to-page]="true"
+                          style="display: block;"
+               ></pdf-viewer>
+          </div>
+          <br>
+      </div>
+    </label><br><br>
+    <label>Diagnosis
+      <textarea [hidden]="pdfDiagnosis" formControlName="diagnosis" rows="10" cols="50"> </textarea>
+      <input type="file" (change)="onchangeDiagnosis($event)">
+      <div [hidden]="!pdfDiagnosis">
+        <div>
+          <button type="button" (click)="incrementDiagnosisPage(-1)">-</button><span> Page </span>
+          <button type="button" (click)="incrementDiagnosisPage(1)">+</button>
+          <button type="button" (click)="incrementDiagnosisZoom(-0.1)">-</button><span> Zoom </span>
+          <button type="button" (click)="incrementDiagnosisZoom(0.1)">+</button>
+          <button type="button" (click)="rotateDiagnosis(-90)"> Rotate Left </button><span> Rotate </span>
+          <button type="button" (click)="rotateDiagnosis(90)"> Rotate Right </button>
+        </div>
+          <div class="thumbnail" style="width: 200px;height: 100px;">
+              <pdf-viewer [src]="pdfSrc"
+                          [(page)]="diagnosisPage"
+                          [original-size]="false"
+                          [show-all]="false"
+                          [render-text]="true"
+                          [rotation]="diagnosisRotation"
+                          [zoom] = "diagnosisZoom"
+                          [fit-to-page]="true"
+                          style="display: block;"
+               ></pdf-viewer>
+          </div>
+          <br>
+      </div>
+  </label><br><br>
+  <label>Labreports
+    <textarea [hidden]="pdfLabReport || imgLabReports" formControlName="labReports" rows="10" cols="50"></textarea>
+    <input type="file" (change)="onchangeLabreports($event)">
+    <div [hidden]="!pdfLabReport">
+      <div>
+        <button type="button" (click)="incrementlabReportPage(-1)">-</button><span> Page </span>
+        <button type="button" (click)="incrementlabReportPage(1)">+</button>
+        <button type="button" (click)="incrementlabReportZoom(-0.1)">-</button><span> Zoom </span>
+        <button type="button" (click)="incrementlabReportZoom(0.1)">+</button>
+        <button type="button" (click)="rotatelabReport(-90)"> Rotate Left </button><span> Rotate </span>
+        <button type="button" (click)="rotatelabReport(90)"> Rotate Right </button>
+      </div>
+        <div class="thumbnail" style="width: 200px;height: 100px;">
+            <pdf-viewer [src]="pdfSrc"
+                        [(page)]="labReportPage"
+                        [original-size]="false"
+                        [show-all]="false"
+                        [render-text]="true"
+                        [rotation]="labReportRotation"
+                        [zoom] = "labReportZoom"
+                        [fit-to-page]="true"
+                        style="display: block;"
+             ></pdf-viewer>
+        </div>
+        <br>
+    </div>
+    <div [hidden]="!imgLabReports">
+    <img *ngFor= "let url of urls" [src]="url" width="100px" height="100px">
+  </div>
+  </label><br><br>
+  <label>Prescriptions
+    <textarea [hidden]="pdfPrescription"  formControlName="prescription"  rows="10" cols="50"> </textarea>
+    <input type="file" (change)="onchangePrescription($event)">
+    <div [hidden]="!pdfPrescription">
+      <div>
+        <button type="button" (click)="incrementprescriptionPage(-1)">-</button><span> Page </span>
+        <button type="button" (click)="incrementprescriptionPage(1)">+</button>
+        <button type="button" (click)="incrementprescriptionZoom(-0.1)">-</button><span> Zoom </span>
+        <button type="button" (click)="incrementprescriptionZoom(0.1)">+</button>
+        <button type="button" (click)="rotatePrescription(-90)"> Rotate Left </button><span> Rotate </span>
+        <button type="button" (click)="rotatePrescription(90)"> Rotate Right </button>
+      </div>
+        <div class="thumbnail" style="width: 200px;height: 100px;">
+            <pdf-viewer [src]="pdfSrc"
+                        [(page)]="prescriptionPage"
+                        [original-size]="false"
+                        [show-all]="false"
+                        [render-text]="true"
+                        [rotation]="prescriptionRotation"
+                        [zoom] = "prescriptionZoom"
+                        [fit-to-page]="true"
+                        style="display: block;"
+             ></pdf-viewer>
+        </div>
+        <br>
+    </div>
+  </label><br><br>
+  </div><br><br>
+  <button type="submit">Submit</button>
+  <button type="reset" showRecordTemplate=flase>Cancel</button>
+</form>
+</div>
+<div *ngFor="let asset of allAssets; let i = index">
+  <button type="button" (click)="toggle(i+1)">+</button>
+  <span>Record</span><span> {{i+1}} </span><span>Hospital-</span><span> {{asset.hospital}} </span>
+  <span>Doctor-</span><span> {{asset.doctor}}  </span><span>Created-</span><span> {{asset.createdOn}} </span><span>Last Modified-</span><span> {{asset.lastModified}} </span>
+  <div>Authorize:
+  <input type="text" [(ngModel)]="authorize[i+1]" placeholder="Authorize a professional to view the record">
+  <input type="submit" (click)="onchangeAuthorized(i+1)" value="Submit">
+  </div>
+  <div [hidden]="!expandrecord[i]">
+    <div>
+    <h3>Description</h3>
+    <p> {{asset.description}} </p>
+  </div>
+  <div>
+    <h3>Summary</h3>
+    <div [hidden]="!pdfSummaryDisplay[i]">
+      <div>
+        <button type="button" (click)="incrementSummaryPage(-1)">-</button><span> Page </span>
+        <button type="button" (click)="incrementSummaryPage(1)">+</button>
+        <button type="button" (click)="incrementSummaryZoom(-0.1)">-</button><span> Zoom </span>
+        <button type="button" (click)="incrementSummaryZoom(0.1)">+</button>
+        <button type="button" (click)="rotateSummary(-90)"> Rotate Left </button><span> Rotate </span>
+        <button type="button" (click)="rotateSummary(90)"> Rotate Right </button>
+      </div>
+        <div class="thumbnail" style="width: 500px;height: 100px;">
+            <pdf-viewer [src]="pdfSrc"
+                        [(page)]="summaryPage"
+                        [original-size]="false"
+                        [show-all]="false"
+                        [render-text]="true"
+                        [rotation]="summaryRotation"
+                        [zoom] = "summaryZoom"
+                        [fit-to-page]="false"
+                        style="display: block;"
+             ></pdf-viewer>
+        </div>
+        <br>
+    </div>
+    <div [hidden]="pdfSummaryDisplay[i]"> {{asset.summary}} </div>
+  </div>
+  <div>
+    <h3>Diagnosis</h3>
+    <div [hidden]="!pdfDiagnosisDisplay[i]">
+      <div>
+        <button type="button" (click)="incrementDiagnosisPage(-1)">-</button><span> Page </span>
+        <button type="button" (click)="incrementDiagnosisPage(1)">+</button>
+        <button type="button" (click)="incrementDiagnosisZoom(-0.1)">-</button><span> Zoom </span>
+        <button type="button" (click)="incrementDiagnosisZoom(0.1)">+</button>
+        <button type="button" (click)="rotateDiagnosis(-90)"> Rotate Left </button><span> Rotate </span>
+        <button type="button" (click)="rotateDiagnosis(90)"> Rotate Right </button>
+      </div>
+        <div class="thumbnail" style="width: 500px;height: 100px;">
+            <pdf-viewer [src]="pdfSrc"
+                        [(page)]="diagnosisPage"
+                        [original-size]="false"
+                        [show-all]="false"
+                        [render-text]="true"
+                        [rotation]="diagnosisRotation"
+                        [zoom] = "diagnosisZoom"
+                        [fit-to-page]="false"
+                        style="display: block;"
+             ></pdf-viewer>
+        </div>
+        <br>
+    </div>
+    <div [hidden]="pdfDiagnosisDisplay[i]"> {{asset.diagnosis}} </div>
+  </div>
+  <div>
+    <h3>Lab Reports</h3>
+    <div [hidden]="!pdfLabReportsDisplay[i]">
+      <div>
+        <button type="button" (click)="incrementlabReportPage(-1)">-</button><span> Page </span>
+        <button type="button" (click)="incrementlabReportPage(1)">+</button>
+        <button type="button" (click)="incrementlabReportZoom(-0.1)">-</button><span> Zoom </span>
+        <button type="button" (click)="incrementlabReportZoom(0.1)">+</button>
+        <button type="button" (click)="rotatelabReport(-90)"> Rotate Left </button><span> Rotate </span>
+        <button type="button" (click)="rotatelabReport(90)"> Rotate Right </button>
+      </div>
+        <div class="thumbnail" style="width: 500px;height: 100px;">
+            <pdf-viewer [src]="pdfSrc"
+                        [(page)]="labReportPage"
+                        [original-size]="false"
+                        [show-all]="false"
+                        [render-text]="true"
+                        [rotation]="labReportRotation"
+                        [zoom] = "labReportZoom"
+                        [fit-to-page]="false"
+                        style="display: block;"
+             ></pdf-viewer>
+        </div>
+        <br>
+    </div>
+    <div [hidden]="!imgLabReportsDisplay[i]">
+     <img [src]="urls[i]" style="width: 100px; height: 100px">
+    </div>
+    <div [hidden]="pdfLabReportsDisplay[i] || imgLabReportsDisplay[i]" > {{asset.labReports}} </div>
+  </div>
+  <div>
+    <h3>Prescription</h3>
+    <div [hidden]="!pdfPrescriptionDisplay[i]">
+      <div>
+        <button type="button" (click)="incrementprescriptionPage(-1)">-</button><span> Page </span>
+        <button type="button" (click)="incrementprescriptionPage(1)">+</button>
+        <button type="button" (click)="incrementprescriptionZoom(-0.1)">-</button><span> Zoom </span>
+        <button type="button" (click)="incrementprescriptionZoom(0.1)">+</button>
+        <button type="button" (click)="rotatePrescription(-90)"> Rotate Left </button><span> Rotate </span>
+        <button type="button" (click)="rotatePrescription(90)"> Rotate Right </button>
+      </div>
+        <div class="thumbnail" style="width: 500px;height: 100px;">
+            <pdf-viewer [src]="pdfSrc"
+                        [(page)]="prescriptionPage"
+                        [original-size]="false"
+                        [show-all]="false"
+                        [render-text]="true"
+                        [rotation]="prescriptionRotation"
+                        [zoom] = "prescriptionZoom"
+                        [fit-to-page]="false"
+                        style="display: block;"
+             ></pdf-viewer>
+        </div>
+        <br>
+    </div>
+    <div [hidden]="pdfPrescriptionDisplay[i]" > {{asset.prescription}} </div>
+  </div>
+</div>

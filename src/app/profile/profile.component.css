@@ -1,0 +1,18 @@
+#photo {
+  height: 50px;
+  width: 50px;
+  margin-left: 95%;
+  position: relative;
+}
+.fields {
+  width: 30%;
+}
+.fields1 {
+  width: 30%;
+  margin-left:5%;
+}
+.fields2 {
+  width: 30%;
+  margin-left:5%;
+}
+

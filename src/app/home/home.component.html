@@ -1,0 +1,28 @@
+
+<div *ngIf="!authenticated">
+  <img class="pic" src="../../assets/Health.gif" height=200px>
+  <a href="http://localhost:3000/auth/google">Sign in with google</a>
+</div>
+
+<div *ngIf="authenticated && !loginSuccess">
+  <img class="pic" src="../../assets/Health.gif" height=200px>
+  <br><br>
+  <label class="credentials" >userid
+    <input class="user" type="text" name="userId" [(ngModel)]="userId"  placeholder="user id" required>
+  </label><br>
+  <label class="credentials">password
+    <input class="pass" type="password" name="password" [(ngModel)]="passWord" placeholder="password" required>
+  </label><br><br>
+  <label> User type
+    <select name="userType" [(ngModel)]="userType" required>
+      <option value="professsional">Professional</option>
+      <option value="user">User</option>
+    </select>
+  </label>
+
+  <button class="press" type="submit" (click)="onSubmit()">Login</button>
+
+</div>
+
+<app-profile *ngIf="loginSuccess && userType === 'user'" [myId]="userId" ></app-profile>
+<app-professional *ngIf="loginSuccess && userType === 'professsional'" [professionalId]="userId"></app-professional>

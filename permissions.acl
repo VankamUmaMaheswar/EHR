@@ -1,0 +1,113 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Sample access control list.
+ */
+rule  ParticipantCanReadOnlyHisData {
+    description: "Allow all participants read access to all resources"
+    participant(p): "myhealth.digital.health.User"
+    operation:ALL 
+    resource(r): "myhealth.digital.health.User"
+    condition: (p.getIdentifier() == r.getIdentifier())
+    action: ALLOW
+}
+
+rule ParticipantCanViewAndUpdateOnlyHisRecords {
+    description: "Allow all participants to submit transactions"
+    participant(p): "myhealth.digital.health.User"
+    operation: ALL
+    resource(r): "myhealth.digital.health.Records"
+    condition: (p.getIdentifier() == r.owner.getIdentifier())
+    action: ALLOW
+}
+
+rule AuthorizedParticipantCanReadAllUserRecord {
+     description: "Authorized participant can read user record"
+     participant(p): "myhealth.digital.health.Professional"
+     operation: READ
+     resource(r): "myhealth.digital.health.User"
+     condition: (canRead(p,r))
+     action: ALLOW
+}
+
+rule AuthParticipantCanCreateRecords {
+    description: "Allow Autorized participant to create a record"
+    participant(p): "myhealth.digital.health.Professional"
+    operation: CREATE
+    resource(r): "myhealth.digital.health.Records"
+    condition: (canSubmit(p,r)) 
+    action: ALLOW
+}
+
+rule AuthorizedParticipantCanViewRecords {
+    description: "Authorized person can view others records"
+    participant(p): "myhealth.digital.health.Professional"
+    operation: READ
+    resource(r): "myhealth.digital.health.Records"
+    condition: (permitted(p,r))
+    action: ALLOW
+}
+
+rule AuthorizedCanViewHisReord {
+   description: "Authorizer can view his details"
+   participant(p): "myhealth.digital.health.Professional"
+   operation:ALL
+   resource(r): "myhealth.digital.health.Professional"
+   condition: (r.getIdentifier() == p.getIdentifier())
+   action: ALLOW
+}
+
+rule ParticipantCanAutorizeToViewTheRecord {
+   description: "Participant can authorize others to view the record"
+   participant(p): "myhealth.digital.health.User"
+   operation: UPDATE
+   resource(r): "myhealth.digital.health.Records"
+   transaction(tx): "myhealth.digital.health.AuthorizeRecordView"
+   condition: (r.owner.getIdentifier() == p.getIdentifier())
+   action: ALLOW
+}
+
+rule ParticiapntAuthorizeRecordView {
+   description: "Particiapnt can authorize other to view the record"
+   participant(p): "myhealth.digital.health.User"
+   operation: UPDATE
+   resource(r):"myhealth.digital.health.Records"
+   condition: (r.owner.getIdentifier() == p.getIdentifier())
+   action: ALLOW
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
